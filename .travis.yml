@@ -1,0 +1,30 @@
+language: node_js
+branches:
+  except:
+    - gh-pages
+sudo: false
+node_js:
+  - "stable"
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install
+script:
+  - npm run build
+  - npm test
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+deploy:
+  - provider: pages
+    target-branch: master
+    skip-cleanup: true
+    github-token: $GITHUB_KEY
+    keep-history: true
+    local-dir: build
+    email: $EMAIL
+    name: $NAME
+    on:
+      branch: develop
